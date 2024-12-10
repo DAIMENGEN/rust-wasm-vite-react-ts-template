@@ -9,7 +9,13 @@ crate-type = ["cdylib"]
 
 [features]
 default = [
+    "web-sys/Node",
+    "web-sys/Window",
     "web-sys/console",
+    "web-sys/Element",
+    "web-sys/Document",
+    "web-sys/HtmlElement",
+    "web-sys/HtmlButtonElement",
     "console_error_panic_hook"
 ]
 
@@ -31,3 +37,7 @@ wasm-bindgen-test = "0.3"
 [profile.release]
 # Tell `rustc` to optimize for small code size.
 opt-level = "s"
+
+# Also don't forget to compile in release mode for the smallest binaries! For larger applications you'll likely also want to turn on LTO to generate the smallest binaries
+# https://rustwasm.github.io/docs/wasm-bindgen/examples/add.html
+lto = true

@@ -1,9 +1,11 @@
 import {useEffect} from "react";
+
 import * as wasm from "rust-wasm-crate";
 
-export const UsingConsoleLog = () => {
+export const DomHelloWorld = () => {
+
     useEffect(() => {
-        wasm.using_console_log();
+        wasm.create_p_element();
     }, []);
 
     return (

@@ -7,19 +7,22 @@ import {UsingAlert} from "./example/using-alert.tsx";
 import {UsingConsoleLog} from "./example/using-console-log.tsx";
 import {ReceivingJavascriptClosures} from "./example/receiving-javascript-closures.tsx";
 import {JsSnippets} from "./example/js-snippets.tsx";
-
+import {WorkingWithTheCharType} from "./example/working-with-the-char-type.tsx";
+import {DomHelloWorld} from "./example/dom-hello-world.tsx";
+import {PassingRustClosure} from "./example/passing-rust-closure.tsx";
 
 function App() {
     const [count, setCount] = useState(0);
-
-
     return (
         <>
             <div>
                 <UsingAlert/>
                 <JsSnippets/>
+                <DomHelloWorld/>
                 <UsingConsoleLog/>
+                <PassingRustClosure/>
                 <CallJavascriptClosures/>
+                <WorkingWithTheCharType/>
                 <ReceivingJavascriptClosures/>
                 <a href="https://vite.dev" target="_blank">
                     <img src={viteLogo} className="logo" alt="Vite logo"/>
