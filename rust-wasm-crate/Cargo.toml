@@ -9,12 +9,19 @@ crate-type = ["cdylib"]
 
 [features]
 default = [
+    "web-sys/Url",
     "web-sys/Node",
+    "web-sys/Worker",
+    "web-sys/WorkerType",
+    "web-sys/WorkerOptions",
     "web-sys/Window",
     "web-sys/console",
+    "web-sys/MessageEvent",
     "web-sys/Element",
     "web-sys/Document",
     "web-sys/HtmlElement",
+    "web-sys/HtmlDivElement",
+    "web-sys/HtmlInputElement",
     "web-sys/HtmlButtonElement",
     "console_error_panic_hook"
 ]
