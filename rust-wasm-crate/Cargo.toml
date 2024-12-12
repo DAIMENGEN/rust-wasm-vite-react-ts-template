@@ -12,6 +12,7 @@ default = [
     "web-sys/Url",
     "web-sys/Node",
     "web-sys/Navigator",
+    "web-sys/MessagePort",
     "web-sys/MediaStream",
     "web-sys/MediaDevices",
     "web-sys/MediaStreamConstraints",

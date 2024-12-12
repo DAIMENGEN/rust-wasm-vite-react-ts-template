@@ -12,6 +12,16 @@ pub async fn use_audio_worklet_in_rust(url: &str) {
         .create_media_stream_source(&microphone_stream)
         .unwrap();
     let audio_worklet_node = audio_worklet_node(&audio_context, "use-audio-worklet-in-rust-processor");
+    let message_port = audio_worklet_node.port().unwrap();
+    // 设置 onmessage 事件处理器
+    let closure = Closure::wrap(Box::new(|event: web_sys::MessageEvent| {
+        // 从事件对象中获取消息
+        let message = event.data().as_string().unwrap();
+        // 打印接收到的消息
+        web_sys::console::log_1(&message.into());
+    }) as Box<dyn FnMut(_)>);
+    message_port.set_onmessage(Some(closure.as_ref().unchecked_ref()));
+    closure.forget();
     let destination_node = audio_context.destination();
     source_node
         .connect_with_audio_node(&audio_worklet_node)
