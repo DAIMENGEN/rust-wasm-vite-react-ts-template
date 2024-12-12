@@ -12,6 +12,7 @@ import {DomHelloWorld} from "./example/dom-hello-world.tsx";
 import {PassingRustClosure} from "./example/passing-rust-closure.tsx";
 import {RequestAnimationFrame} from "./example/request-animation-frame.tsx";
 import {WasmInWebWorker} from "./example/wasm-in-web-worker.tsx";
+import {WasmUseAudioWorkletInRust} from "./example/wasm-use-audio-worklet-in-rust.tsx";
 
 function App() {
     const [count, setCount] = useState(0);
@@ -27,6 +28,7 @@ function App() {
                 <RequestAnimationFrame/>
                 <CallJavascriptClosures/>
                 <WorkingWithTheCharType/>
+                <WasmUseAudioWorkletInRust/>
                 <ReceivingJavascriptClosures/>
                 <a href="https://vite.dev" target="_blank">
                     <img src={viteLogo} className="logo" alt="Vite logo"/>
