@@ -17,9 +17,9 @@ pub async fn use_audio_worklet_in_rust(url: &str) {
     let closure = Closure::wrap(Box::new(|event: web_sys::MessageEvent| {
         // 从事件对象中获取消息
         let data = event.data();
-        let array = js_sys::Float32Array::new(&data);
+        let array = js_sys::Float32Array::new(&data).to_vec();
         // 打印接收到的消息
-        web_sys::console::log_1(&array.into());
+        web_sys::console::log_2(&"Received message: ".into(), &array.into());
     }) as Box<dyn FnMut(_)>);
     message_port.set_onmessage(Some(closure.as_ref().unchecked_ref()));
     closure.forget();
