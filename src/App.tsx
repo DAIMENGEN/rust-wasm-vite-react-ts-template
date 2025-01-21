@@ -1,8 +1,8 @@
-import {useState} from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import {CallJavascriptClosures} from './example/call-javascript-closures';
+import "./App.css";
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import { CallJavascriptClosures } from "./example/call-javascript-closures";
 import {UsingAlert} from "./example/using-alert.tsx";
 import {UsingConsoleLog} from "./example/using-console-log.tsx";
 import {ReceivingJavascriptClosures} from "./example/receiving-javascript-closures.tsx";
