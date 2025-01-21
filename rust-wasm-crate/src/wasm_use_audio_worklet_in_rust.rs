@@ -1,12 +1,28 @@
+use std::collections::VecDeque;
 use crate::set_panic_hook::set_panic_hook;
 use wasm_bindgen::prelude::*;
+use web_sys::{MessageEvent, Worker, WorkerOptions, WorkerType};
 
 #[wasm_bindgen]
-pub async fn use_audio_worklet_in_rust(url: &str) {
+pub async fn use_audio_worklet_in_rust(worklet_url: &str, worker_url: &str) {
     set_panic_hook();
+
+    let worker_options = WorkerOptions::new();
+    worker_options.set_type(WorkerType::Module);
+    let mut queue: VecDeque<Vec<f32>> = VecDeque::new();
+    let worker = Worker::new_with_options(worker_url, &worker_options).unwrap();
+    let on_message = Closure::wrap(Box::new(move |event: MessageEvent| {
+        web_sys::console::log_2(&"Queue length: ".into(), &queue.len().into());
+        let data = event.data();
+        let array = js_sys::Float32Array::new(&data).to_vec();
+        queue.push_back(array);
+    }) as Box<dyn FnMut(MessageEvent)>);
+    worker.set_onmessage(Some(on_message.as_ref().unchecked_ref()));
+    on_message.forget();
+
     let audio_context = web_sys::AudioContext::new().unwrap();
     let audio_worklet = audio_context.audio_worklet().unwrap();
-    try_into_result(audio_worklet.add_module(url)).await;
+    try_into_result(audio_worklet.add_module(worklet_url)).await;
     let microphone_stream = get_audio_device_stream().await;
     let source_node = audio_context
         .create_media_stream_source(&microphone_stream)
@@ -14,12 +30,13 @@ pub async fn use_audio_worklet_in_rust(url: &str) {
     let audio_worklet_node = audio_worklet_node(&audio_context, "use-audio-worklet-in-rust-processor");
     let message_port = audio_worklet_node.port().unwrap();
     // 设置 onmessage 事件处理器
-    let closure = Closure::wrap(Box::new(|event: web_sys::MessageEvent| {
+    let closure = Closure::wrap(Box::new(move |event: MessageEvent| {
         // 从事件对象中获取消息
         let data = event.data();
         let array = js_sys::Float32Array::new(&data).to_vec();
         // 打印接收到的消息
-        web_sys::console::log_2(&"Received message: ".into(), &array.into());
+        web_sys::console::log_2(&"Send message: ".into(), &array.clone().into());
+        worker.post_message(&array.into()).unwrap();
     }) as Box<dyn FnMut(_)>);
     message_port.set_onmessage(Some(closure.as_ref().unchecked_ref()));
     closure.forget();
