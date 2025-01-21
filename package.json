@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "update": "node ./script/update_script.js",
     "preview": "vite preview",
-    "wasm-web": "wasm-pack build ./rust-wasm-crate --target web",
+    "wasm-web": "wasm-pack build ./rust-wasm-crate --target web && yarn update",
     "wasm-no-modules": "wasm-pack build ./rust-wasm-crate --target no-modules"
   },
   "dependencies": {
